@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "public/stylesheets/style.css",
+    "inputFile": "public/stylesheets/style.styl"
+  },
+  {
+    "outputFile": "public/stylesheets/dark/styledark.css",
+    "inputFile": "public/stylesheets/dark/styledark.styl"
+  }
+]

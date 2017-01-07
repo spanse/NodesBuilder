@@ -1,0 +1,75 @@
+﻿//colors
+$color_chicago_approx: #595959;
+$color_chestnut_approx: #b94a48;
+$color_japanese_laurel_approx: #008000;
+$color_seance_approx: #800080;
+$color_concord_approx: #7d7d7d;
+$color_dove_gray_approx: #6e6e6e;
+
+//fonts
+$font_0: Kameron;
+$font_1: serif;
+
+@import 'https://fonts.googleapis.com/css?family=Freckle+Face|Kameron';
+
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	background: $color_chicago_approx;
+}
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+	font-family: $font_0, $font_1;
+	font-size: 1.2em;
+}
+input {
+	max-width: 280px;
+	&.input-validation-error {
+		border: 1px solid $color_chestnut_approx;
+	}
+}
+select {
+	max-width: 280px;
+}
+textarea {
+	max-width: 280px;
+}
+.field-validation-error {
+	color: $color_chestnut_approx;
+}
+.field-validation-valid {
+	display: none;
+}
+.validation-summary-errors {
+	color: $color_chestnut_approx;
+}
+.validation-summary-valid {
+	display: none;
+}
+.generic {
+	color: $color_japanese_laurel_approx;
+}
+.specific {
+	color: $color_seance_approx;
+}
+.tile {
+	background-color: $color_concord_approx;
+	margin: 0.1em;
+	width: 25%;
+	height: 20em;
+	//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+	transition: width 0.35s, background 0.35s;
+	&:hover {
+		background: $color_dove_gray_approx;
+		width: 33%;
+		//Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+		transition: width 0.1s background 0.1s;
+	}
+}
+.jumbotron {
+	background: $color_concord_approx;
+}
+input[type="checkbox"].input-validation-error {
+	border: 0 none;
+}

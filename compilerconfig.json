@@ -5,6 +5,10 @@
   },
   {
     "outputFile": "public/stylesheets/dark/styledark.css",
-    "inputFile": "public/stylesheets/dark/styledark.styl"
+    "inputFile": "public/stylesheets/dark/styledark.scss"
+  },
+  {
+    "outputFile": "public/stylesheets/style.css",
+    "inputFile": "public/stylesheets/style.scss"
   }
 ]

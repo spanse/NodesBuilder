@@ -1,0 +1,99 @@
+﻿//colors
+$color_cape_cod_approx: #424242;
+$wheat_80: rgba(245,222,179,0.8);
+$wheat_20: rgba(245,222,179,0.2);
+$black_15: rgba(0,0,0,0.15);
+$black_5: rgba(0,0,0,0.05);
+$wheat: #f5deb3;
+$color_gable_green_approx: #113c37;
+$color_suva_gray_approx: #888;
+$blue: #00f;
+$color_tamarind_approx: #3c1115;
+$black: #000;
+
+//fonts
+$font_0: Kameron;
+$font_1: serif;
+
+@import 'https://fonts.googleapis.com/css?family=Freckle+Face|Kameron';
+
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	background: $color_cape_cod_approx;
+}
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+	font-family: $font_0, $font_1;
+	font-size: 1.2em;
+}
+input {
+	max-width: 280px;
+}
+select {
+	max-width: 280px;
+}
+textarea {
+	max-width: 280px;
+}
+.navbar-dark {
+	background: $wheat_80;
+	background: linear-gradient($wheat_80, $wheat_20);
+}
+article {
+	margin: 2%;
+	background: $wheat;
+	border: 1px $color_gable_green_approx solid;
+	//Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+	border-radius: 2px;
+	//Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+	box-shadow: 1px 1px 1px $color_suva_gray_approx;
+	a {
+		text-decoration: none;
+		color: inherit;
+		&:link {
+			text-decoration: none;
+			color: inherit;
+		}
+		&:visited {
+			text-decoration: none;
+			color: inherit;
+		}
+		&:active {
+			text-decoration: none;
+			color: inherit;
+		}
+		&:hover {
+			color: $blue;
+		}
+	}
+}
+.titleBar {
+	width: 90%;
+	height: 10%;
+	border-top: 20px solid $color_tamarind_approx;
+	border-right: 100px solid transparent;
+}
+hr {
+	display: block;
+	position: relative;
+	padding: 0;
+	margin: 0;
+	height: 0;
+	width: 100%;
+	max-height: 0;
+	font-size: 1px;
+	line-height: 0;
+	clear: both;
+	border: none;
+	border-top: 0.5px solid $black;
+}
+.navbar a {
+	color: $color_cape_cod_approx !important;
+	font-weight: bold;
+	border-right: 1px solid $black_15;
+	&:hover {
+		background-color: $black_5 !important;
+	}
+}

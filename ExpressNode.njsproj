@@ -34,6 +34,15 @@
     <Compile Include="routes\index.js" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="views\about.pug" />
+    <Content Include="views\blog.pug" />
+    <Content Include="views\cache.pug" />
+    <Content Include="views\chat.pug" />
+    <Content Include="views\confirm.pug" />
+    <Content Include="views\contact.pug" />
+    <Content Include="views\index.pug" />
+    <Content Include="views\layout.pug" />
+    <Content Include="views\layoutdark.pug" />
     <None Include="compilerconfig.json" />
     <Content Include="compilerconfig.json.defaults">
       <SubType>Content</SubType>
@@ -76,15 +85,6 @@
     <Content Include="public\stylesheets\style.scss" />
     <Content Include="README.md" />
     <Content Include="typings.json" />
-    <Content Include="views\cache.jade" />
-    <Content Include="views\blog.jade" />
-    <Content Include="views\confirm.jade" />
-    <Content Include="views\chat.jade" />
-    <Content Include="views\contact.jade" />
-    <Content Include="views\about.jade" />
-    <Content Include="views\index.jade" />
-    <Content Include="views\layoutdark.jade" />
-    <Content Include="views\layout.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\" />
@@ -100,6 +100,7 @@
     <Folder Include="typings\globals\express\" />
     <Folder Include="typings\globals\jade\" />
     <Folder Include="typings\globals\node\" />
+    <Folder Include="typings\globals\pug\" />
     <Folder Include="typings\globals\stylus\" />
     <Folder Include="views\" />
   </ItemGroup>
@@ -108,6 +109,7 @@
     <TypeScriptCompile Include="typings\globals\express\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\jade\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\pug\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\stylus\index.d.ts" />
     <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>

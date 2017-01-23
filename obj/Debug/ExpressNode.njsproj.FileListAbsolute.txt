@@ -1,0 +1,2 @@
+E:\VisualStudios\NodesBuilder\obj\Debug\ExpressNode.njsprojResolveAssemblyReference.cache
+E:\VisualStudios\NodesBuilder\bin\Microsoft.NodejsTools.WebRole.dll

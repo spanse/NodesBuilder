@@ -4,10 +4,10 @@
 var express = require('express');
 var sql = require('mssql');
 activeConnection = new sql.Connection({
-    user: 'remote',
-    password: 'Marksman12',
-    server: '216.197.156.69',
-    database: 'WebServer',
+    user: <<ENTER A USERNAME>>,
+    password: <<ENTER A PASSWORD>>,
+    server: <<ENTER SERVER ADDRESS>>,
+    database: <<ENTER DATABASE NAME>>,
     //options: { encrypt: true },
     //pool: { max: 10, min: 0, idleTimeoutMillis: 600000 }
 });

@@ -2,7 +2,17 @@
 //Dependencies/Modules
 
 var express = require('express');
+var sql = require('mssql');
+activeConnection = new sql.Connection({
+    user: 'remote',
+    password: 'Marksman12',
+    server: '216.197.156.69',
+    database: 'WebServer',
+    //options: { encrypt: true },
+    //pool: { max: 10, min: 0, idleTimeoutMillis: 600000 }
+});
 var routes = require('./routes');
+var postRoutes = require('./ajax');
 var http = require('http');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -10,13 +20,12 @@ var engines = require('consolidate');
 var session = require('express-session');
 var MSSQLStore = require('connect-mssql')(session);
 var db = require('./dbconnect');
-var dbtools = require('./ajax/test');
 var app = express();
 
 var config = {
     user: 'remote',
     password: 'Marksman12',
-    server: '216.197.156.69', // You can use 'localhost\\instance' to connect to named instance
+    server: '216.197.156.69',
     database: 'WebServer'
 };
 
@@ -64,12 +73,12 @@ if ('development' == app.get('env')) {
 //Give routes
 app.get('/', routes.index);
 app.get('/about', routes.about);
-app.get('/chat', routes.chat);
 app.get('/blog', routes.blog);
 app.get('/login', routes.login);
 app.get('/inventory', routes.inventory);
 app.post('/example', routes.example);
 app.post('/confirm', routes.confirm); //form method is POST, action is /confirm
+app.post('/createUser', postRoutes.createUser);
 
 //Initialize HTTP web server
 http.createServer(app).listen(app.get('port'), function () {

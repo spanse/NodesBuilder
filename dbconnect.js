@@ -1,15 +1,9 @@
 ﻿var sql = require('mssql');
 
-var connection = new sql.Connection({
-    user: 'remote',
-    password: 'Marksman12',
-    server: '216.197.156.69', // You can use 'localhost\\instance' to connect to named instance
-    database: 'WebServer'
-});
-
-connection.connect(function (err) {
-    if (err) throw err;
-});
-var request = new sql.Request();
-module.exports = connection;
-module.exports = request;
+module.exports.userQuery = function (activeConnection, queryCommand) {
+    console.log(queryCommand);
+    new sql.Request(activeConnection).query(queryCommand).catch(function (err) {
+        console.log("There was an error running the query.");
+        console.log(err);
+    });
+}

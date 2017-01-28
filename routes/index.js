@@ -1,7 +1,7 @@
 ﻿//NOTE: To avoid confusion avoid using app.set('view engine'...), must explicitly give all file extensions
 //    : Be careful with passing in variables. Whenever you get client-side cache working, might get outdated
 
-
+var db = require('../dbconnect');
 
 exports.index = function (req, res) {
     res.render('index.pug', {jadeversion: 'jade@1.11.0' });

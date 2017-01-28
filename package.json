@@ -8,7 +8,12 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
+    "connect-mssql": "^1.5.0",
+    "consolidate": "0.14.5",
+    "ejs": "2.5.5",
     "express": "3.4.4",
+    "express-session": "1.15.0",
+    "mssql": "^3.3.0",
     "pug": "2.0.0-beta6"
   }
 }

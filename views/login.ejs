@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">-->
+    <script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/bootstrap.js"></script>
+    <script src="/javascripts/respond.js"></script>
+    <script type='text/javascript'>
+        $(document).ready(function() {
+
+
+        });
+
+        ////Creates user in server database////
+        function createUser() {
+
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var email = $('#useremail').val();
+            var data = {};
+            data.username = username;
+            data.email = email;
+            data.password = password;
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json', //THIS IS NOT OPTIONAL
+                url: '/createUser',
+                success: function(data) {
+                    console.log("User creation successful.");
+                },
+                error: function(data) {
+                    console.log("Error in user creation.");
+                    console.log(data);
+                    $('#myModal').modal("show");
+
+                }
+            });
+        } //createUser
+
+        function createSession() {
+
+        } //createSession
+    </script>
+</head>
+
+<body>
+
+    <div class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                <a href="/" class="navbar-brand">Main</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+
+        <!--<div id="select_div"><a href="#" id="select_link">Test</a></div> used for testing AJAX -->
+        <div class="container row">
+            <div id="session-login" class="container col-sm-6">
+                <h2>Remember my session!</h2>
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="John Doe" />
+                <input type="email" id="email" placeholder="example@email.ca" />
+            </div>
+
+            <div id="user-login" class="container col-sm-6">
+                <h2>Always remember me!</h2>
+                <label for='username'>Username:</label>
+                <input type='text' id='username' placeholder='John Doe' />
+                <input type='text' id='password' placeholder='Secret Formula' />
+                <input type='email' id='useremail' placeholder='example@email.ca' />
+                <input type='button' id='create-user' value='Register' onclick="createUser()" />
+            </div>
+        </div>
+        <hr>
+        <footer>
+            <p>Learning Experience - Spencer</p>
+        </footer>
+    </div>
+
+    <!-- Create failure modal. -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Uh-Oh!</h2>
+                </div>
+                <div class="modal-body">
+                    There was a problem creating your account, please make sure you entered valid information!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

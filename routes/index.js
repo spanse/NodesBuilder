@@ -1,29 +1,17 @@
 ﻿//NOTE: To avoid confusion avoid using app.set('view engine'...), must explicitly give all file extensions
 //    : Be careful with passing in variables. Whenever you get client-side cache working, might get outdated
+
+
+
 exports.index = function (req, res) {
-
-
     res.render('index.pug', {jadeversion: 'jade@1.11.0' });
 };
-
 exports.about = function (req, res) {
     res.render('about.pug');
 };
-
-exports.contact = function (req, res) {
-    res.render('contact.pug', {prickOfTheDay: 'Davon' });
-};
-
-exports.chat = function (req, res) {
-    res.render('chat.pug');
-};
-
 exports.confirm = function (req, res) {
     var name = req.body.name;
     res.render('confirm.pug', { name: name });
-};
-exports.cache = function (req, res) {
-    res.render('cache.pug');
 };
 exports.blog = function (req, res) {
     var titleHead = "Blog Example Title Number One!";

@@ -32,16 +32,16 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="dbconnect.js" />
+    <Compile Include="public\javascripts\jquery-3.1.1.js" />
+    <Compile Include="public\javascripts\jquery-3.1.1.min.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="ajax\test.js" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="public\javascripts\jquery-3.1.1.min.map" />
     <Content Include="views\about.pug" />
     <Content Include="views\blog.pug" />
-    <Content Include="views\cache.pug" />
-    <Content Include="views\chat.pug" />
     <Content Include="views\confirm.pug" />
-    <Content Include="views\contact.pug" />
     <Content Include="views\login.ejs" />
     <Content Include="views\index.pug" />
     <Content Include="views\inventory.ejs" />
@@ -55,9 +55,6 @@
     <Content Include="public\images\borg.jpg" />
     <Content Include="public\javascripts\bootstrap.js" />
     <Content Include="public\javascripts\bootstrap.min.js" />
-    <Content Include="public\javascripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="public\javascripts\jquery-1.10.2.js" />
-    <Content Include="public\javascripts\jquery-1.10.2.min.js" />
     <Content Include="public\javascripts\jquery.validate-vsdoc.js" />
     <Content Include="public\javascripts\jquery.validate.js" />
     <Content Include="public\javascripts\jquery.validate.min.js" />
@@ -72,7 +69,6 @@
     <Content Include="public\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="public\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="public\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="public\javascripts\jquery-1.10.2.min.map" />
     <Content Include="public\stylesheets\bootstrap.css" />
     <Content Include="public\stylesheets\bootstrap.min.css" />
     <Content Include="public\stylesheets\dark\styledark.css" />

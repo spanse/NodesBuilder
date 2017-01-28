@@ -64,7 +64,6 @@ if ('development' == app.get('env')) {
 //Give routes
 app.get('/', routes.index);
 app.get('/about', routes.about);
-app.get('/contact', routes.contact);
 app.get('/chat', routes.chat);
 app.get('/blog', routes.blog);
 app.get('/login', routes.login);

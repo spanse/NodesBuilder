@@ -31,7 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="dbconnect.js" />
     <Compile Include="routes\index.js" />
+    <Compile Include="ajax\test.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="views\about.pug" />
@@ -40,7 +42,9 @@
     <Content Include="views\chat.pug" />
     <Content Include="views\confirm.pug" />
     <Content Include="views\contact.pug" />
+    <Content Include="views\login.ejs" />
     <Content Include="views\index.pug" />
+    <Content Include="views\inventory.ejs" />
     <Content Include="views\layout.pug" />
     <Content Include="views\layoutdark.pug" />
     <None Include="compilerconfig.json" />
@@ -87,6 +91,7 @@
     <Content Include="typings.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ajax\" />
     <Folder Include="public\" />
     <Folder Include="public\fonts\" />
     <Folder Include="public\images\" />

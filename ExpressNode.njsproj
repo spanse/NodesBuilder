@@ -34,11 +34,19 @@
     <Compile Include="dbconnect.js" />
     <Compile Include="public\javascripts\jquery-3.1.1.js" />
     <Compile Include="public\javascripts\jquery-3.1.1.min.js" />
+    <Compile Include="public\javascripts\npm.js" />
     <Compile Include="routes\index.js" />
     <Compile Include="ajax\index.js" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="public\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="public\javascripts\jquery-3.1.1.min.map" />
+    <Content Include="public\stylesheets\bootstrap-theme.css" />
+    <Content Include="public\stylesheets\bootstrap-theme.css.map" />
+    <Content Include="public\stylesheets\bootstrap-theme.min.css" />
+    <Content Include="public\stylesheets\bootstrap-theme.min.css.map" />
+    <Content Include="public\stylesheets\bootstrap.css.map" />
+    <Content Include="public\stylesheets\bootstrap.min.css.map" />
     <Content Include="views\about.pug" />
     <Content Include="views\blog.pug" />
     <Content Include="views\confirm.pug" />

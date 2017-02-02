@@ -1,16 +1,14 @@
 ﻿
 //Dependencies/Modules
-
-var express = require('express');
-var sql = require('mssql');
-activeConnection = new sql.Connection({
+var config = {
     user: 'remote',
     password: 'Marksman12',
     server: '216.197.156.69',
-    database: 'WebServer',
-    //options: { encrypt: true },
-    //pool: { max: 10, min: 0, idleTimeoutMillis: 600000 }
-});
+    database: 'WebServer'
+};
+var express = require('express');
+var sql = require('mssql');
+activeConnection = new sql.Connection(config);
 var routes = require('./routes');
 var postRoutes = require('./ajax');
 var http = require('http');
@@ -22,12 +20,7 @@ var MSSQLStore = require('connect-mssql')(session);
 var db = require('./dbconnect');
 var app = express();
 
-var config = {
-    user: 'remote',
-    password: 'Marksman12',
-    server: '216.197.156.69',
-    database: 'WebServer'
-};
+
 
 //Setup
 app.set('port', process.env.PORT || 3000);
@@ -50,7 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     store: new MSSQLStore(config), // options are optional
     secret: 'keyboard cat',
-    cookie: { maxAge: 60000 }
+    cookie: { maxAge: 600000 }
 }));
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -69,16 +62,18 @@ if ('development' == app.get('env')) {
 }
 
 //Session Variables
-
 //Give routes
-app.get('/', routes.index);
+app.get('/', routes.login);
 app.get('/about', routes.about);
 app.get('/blog', routes.blog);
 app.get('/login', routes.login);
 app.get('/inventory', routes.inventory);
+app.get('/console', routes.console);
+app.get('/logout', routes.logout);
 app.post('/example', routes.example);
 app.post('/confirm', routes.confirm); //form method is POST, action is /confirm
-app.post('/createUser', postRoutes.createUser);
+app.post('/loginUser', postRoutes.loginUser);
+app.post('/registerUser', postRoutes.registerUser);
 
 //Initialize HTTP web server
 http.createServer(app).listen(app.get('port'), function () {

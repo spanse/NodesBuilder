@@ -30,10 +30,28 @@ exports.inventory = function (req, res) {
     res.render('inventory.ejs', { name: sessionName, example: example });
 };
 exports.login = function (req, res) {
-    res.render('login.ejs', { example: req.session.sessionName });
+    if (req.session.login == true) {
+        res.render('console.ejs');
+    }
+    else {
+
+        res.render('login.ejs', { example: req.session.sessionName });
+    }
+};
+exports.logout = function (req, res) {
+    req.session.login = false;
+    res.render('login.ejs');
 };
 exports.example = function (req, res) {
     var returnString = JSON.stringify(req.body.fancy);
 
     res.send(returnString);
+};
+exports.console = function (req, res) {
+    if (req.session.login == true) {
+        res.render('console.ejs');
+    }
+    else {
+        res.status(401).send("You are not logged in.");
+    }
 };

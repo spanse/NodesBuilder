@@ -13,15 +13,35 @@
     <script type='text/javascript'>
         $(document).ready(function() {
 
-
         });
 
-        ////Creates user in server database////
-        function createUser() {
+        ////Register User////
+        function registerUser() {
+            var data = {};
+            data.username = "test";
+            data.email = "this@email.ca";
+            data.password = "krabbypatty";
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: '/registerUser',
+                success: function(data) {
+                    console.log(data);
+                    console.log("Success");
+
+                }
+
+            });
+        }
+
+        ////Login User////
+        function loginUser() {
 
             var username = $('#username').val();
             var password = $('#password').val();
-            var email = $('#useremail').val();
+            var email = $('#email').val();
             var data = {};
             data.username = username;
             data.email = email;
@@ -31,63 +51,80 @@
                 type: 'POST',
                 data: JSON.stringify(data),
                 contentType: 'application/json', //THIS IS NOT OPTIONAL
-                url: '/createUser',
+                url: '/loginUser',
                 success: function(data) {
-                    console.log("User creation successful.");
+                    console.log("User login successful.");
+                    console.log(data);
+                    window.location.href = '/console';
+                    $('#signin').toggle();
                 },
                 error: function(data) {
-                    console.log("Error in user creation.");
+                    console.log("Error in login.");
                     console.log(data);
                     $('#myModal').modal("show");
 
                 }
             });
         } //createUser
-
-        function createSession() {
-
-        } //createSession
     </script>
 </head>
 
 <body>
 
-    <div class="navbar navbar-inverse">
-        <div class="container">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
             <div class="navbar-header">
-                <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
-                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                <a href="/" class="navbar-brand">Main</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+                <a class="navbar-brand" href="#">Tekker</a>
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/blog">Blog</a></li>
+                    <li class="active"><a href="/login">Login<span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
                 </ul>
+                <form id="signin" class="navbar-form navbar-right" role="form">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="email" type="email" class="form-control" name="email" value="" placeholder="Email Address">
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="username" type="username" class="form-control" name="username" value="" placeholder="Username">
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="loginUser()">Login</button>
+                </form>
+
             </div>
         </div>
-    </div>
+    </nav>
 
     <div class="container body-content">
 
-        <!--<div id="select_div"><a href="#" id="select_link">Test</a></div> used for testing AJAX -->
-        <div class="container row">
-            <div id="session-login" class="container col-sm-6">
-                <h2>Remember my session!</h2>
-                <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="John Doe" />
-                <input type="email" id="email" placeholder="example@email.ca" />
-            </div>
-
-            <div id="user-login" class="container col-sm-6">
-                <h2>Always remember me!</h2>
-                <label for='username'>Username:</label>
-                <input type='text' id='username' placeholder='John Doe' />
-                <input type='text' id='password' placeholder='Secret Formula' />
-                <input type='email' id='useremail' placeholder='example@email.ca' />
-                <input type='button' id='create-user' value='Register' onclick="createUser()" />
-            </div>
-        </div>
         <hr>
         <footer>
             <p>Learning Experience - Spencer</p>

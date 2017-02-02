@@ -1,29 +1,61 @@
-﻿var db = require('../dbconnect');
+﻿/*
+Ajax/index.js
+Contains routes for POST requests (sending/receiving async data)
+*/
 
-function validInput(toValidate) {
-    if (toValidate != null && toValidate.length > 0) {
-        return true;
+//  Section: Required modules   //
+var db = require('../dbconnect');
+var session = require('express-session');
+
+//  Section: Setup/Variables  //
+//Designate a connection to use when querying database//
+activeConnection.connect(); //Creates a connection from the connection pool (var in app.js)
+
+/*
+Purpose: Accept sent data, compare it to values in database,
+         if a valid account, set account/session specific variables.
+Uses:    username, password, email
+*/
+
+exports.loginUser = function (req, res) {
+    var userDetails = JSON.parse(JSON.stringify(req.body));
+    console.log("Username: " + userDetails.username);
+
+    db.userLogin(activeConnection, userDetails).then(function (login){
+        console.log("login value is: " + login);
+        if (login == "true") {
+            //User verified
+            console.log("login successful");
+            req.session.login = true;
+            req.session.name = userDetails.username;
+            res.send(req.session.name);
+        }
+        else {
+            //User invalid
+            res.status(401).send("Invalid credentials");
+        }
+    });
+};
+
+/*
+Purpose: Accept sent data, run a query on database to add the new user
+Uses:    username, password, email
+*/
+exports.registerUser = function (req, res) {
+    var userDetails = {};
+    userDetails.username = "Jacob";
+    userDetails.email = "Valid@email.ca";
+    userDetails.password = "SuperSecret";
+    userDetails = JSON.stringify(userDetails);
+    if (db.userRegister(activeConnection, userDetails) == true) {
+        console.log("User registered successfully");
     }
     else {
-        return false;
+        console.log("There was an error in registerUser");
     }
-}
 
-activeConnection.connect(); //This is loaded when server is restarted (require module). So output will not display to console.
-//console.log("AJAX index.js loaded");
+    console.log("registerUser done");
 
-exports.createUser = function (req, res) {
-    var email = JSON.parse(JSON.stringify(req.body.email)); //converts email to JSON string, then parses string from it
-    var username = JSON.parse(JSON.stringify(req.body.username));
-    var password = JSON.parse(JSON.stringify(req.body.password));
-    console.log(email + ", " + username + ", " + password);
+    res.send("Fall Through");
 
-    if (validInput(email) && validInput(username) && validInput(password)) {
-
-        db.userQuery(activeConnection, "INSERT INTO Users VALUES ('" + username + "','" + password + "','" + email + "')");
-        res.send();
-    }
-    else {
-        res.status(500).send('Invalid details.');
-    }
 };

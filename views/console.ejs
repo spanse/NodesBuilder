@@ -10,46 +10,37 @@
     <script src="/javascripts/jquery-3.1.1.min.js"></script>
     <script src="/javascripts/bootstrap.js"></script>
     <script src="/javascripts/respond.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script type='text/javascript'>
         $(document).ready(function() {
-
-        });
-
-        ////Register User////
-        function registerUser() {
-            var data = {};
-            data.username = "test";
-            data.email = "this@email.ca";
-            data.password = "krabbypatty";
-
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                url: '/registerUser',
-                success: function(data) {
-                    console.log(data);
-                    console.log("Success");
-
+            var socket = io();
+            socket.on('product', function(data) {
+                var records = JSON.parse(JSON.stringify(data));
+                console.log(records.length);
+                for (var c = 0; c < records.length; c++) {
+                    var ReceiveDate = records[c].ReceiveDate;
+                    var ExpireDate = records[c].ExpireDate;
+                    ReceiveDate = ReceiveDate.substr(0, ReceiveDate.indexOf('T'));
+                    ExpireDate = ExpireDate.substr(0, ExpireDate.indexOf('T'));
+                    var appendRecord = "<tr>";
+                    appendRecord += "<td>" + records[c].ProductId + "</td>";
+                    appendRecord += "<td>" + records[c].ProductName + "</td>";
+                    appendRecord += "<td>" + records[c].Quantity + "</td>";
+                    appendRecord += "<td>" + ReceiveDate + "</td>";
+                    appendRecord += "<td>" + ExpireDate + "</td>";
+                    appendRecord += "<td>" + records[c].Temperature + "</td>";
+                    appendRecord += "<td>" + records[c].StorageId + "</td>";
+                    appendRecord += "<td>" + records[c].Comments + "</td>";
+                    appendRecord += "</tr>";
+                    $('#productTable').append(appendRecord);
+                    console.log(appendRecord);
                 }
-
             });
-        }
-
+        });
         ////Logout User////
         function logoutUser() {
-
-            var username = $('#username').val();
-            var password = $('#password').val();
-            var email = $('#email').val();
-            var data = {};
-            data.username = username;
-            data.email = email;
-            data.password = password;
-
             $.ajax({
                 type: 'GET',
-                data: JSON.stringify(data),
                 contentType: 'application/json', //THIS IS NOT OPTIONAL
                 url: '/logout',
                 success: function(data) {
@@ -58,10 +49,14 @@
                 error: function(data) {
                     console.log("Logout failed");
                     console.log(data);
-
                 }
             });
-        } //createUser
+        }
+
+        function loadProducts() {
+
+
+        }
     </script>
 </head>
 
@@ -107,6 +102,23 @@
 
         <div class="container">
             <h2>Database View</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Received</th>
+                        <th>Expires</th>
+                        <th>Temperature</th>
+                        <th>Storage</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody id='productTable'>
+
+                </tbody>
+            </table>
 
 
 

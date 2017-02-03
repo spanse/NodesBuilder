@@ -12,7 +12,6 @@ module.exports.userLogin = function (activeConnection, loginDetails) {
 
     var username = loginDetails.username;
     var password = loginDetails.password;
-    var email = loginDetails.email;
 
     var request = new sql.Request(activeConnection);
     request.input('username', sql.NVarChar(50), username);
@@ -30,8 +29,7 @@ module.exports.userLogin = function (activeConnection, loginDetails) {
 }//userLogin
 
 module.exports.userRegister = function (activeConnection, loginDetails) {
-    console.log(loginDetails);
-    loginDetails = JSON.parse(loginDetails);
+
     var username = loginDetails.username;
     var password = loginDetails.password;
     var email = loginDetails.email;
@@ -40,7 +38,6 @@ module.exports.userRegister = function (activeConnection, loginDetails) {
     request.input('username', sql.NVarChar(50), username);
     request.input('password', sql.NVarChar(50), password);
     request.input('email', sql.NVarChar(50), email);
-    //request.output('output_parameter', sql.VarChar(50));
     request.execute('registerUser').then(function (recordsets) {
         console.log("registerUser procedure successful.");
         console.log(recordsets);
@@ -52,3 +49,9 @@ module.exports.userRegister = function (activeConnection, loginDetails) {
     });
 
 }
+
+
+//HEY!: If no records are available, response will hang, should do a check. Or find existing fix, or submit an issue with mssql-connect
+module.exports.productLoad = function (activeConnection) {
+    return new sql.Request(activeConnection).query('SELECT * FROM Products');
+}//productLoad

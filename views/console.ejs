@@ -53,8 +53,11 @@
             });
         }
 
-        function loadProducts() {
+        function newProductForm() {
 
+        }
+
+        function newProduct() {
 
         }
     </script>
@@ -116,12 +119,59 @@
                     </tr>
                 </thead>
                 <tbody id='productTable'>
-
                 </tbody>
             </table>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">New Product</button>
 
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
 
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addProduct" class="form" role="form">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input id="productName" type="text" class="form-control" name="productName" value="" placeholder="Product Name">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input id="productQuantity" type="text" class="form-control" name="productQuantity" value="" placeholder="Quantity">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input id="productReceive" type="date" class="form-control" name="productReceive" value="" placeholder="Receive Date">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input id="productExpire" type="date" class="form-control" name="productExpire" value="" placeholder="Expire Date">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input id="productTemperature" type="text" class="form-control" name="productTemperature" value="" placeholder="Storage Temperature">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input id="productStorage" type="text" class="form-control" name="productStorage" value="" placeholder="Storage Id">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input id="productComment" type="text" class="form-control" name="productComment" value="" placeholder="Comments">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="newProduct()">Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
 
         </div>
 

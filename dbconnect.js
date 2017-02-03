@@ -51,7 +51,7 @@ module.exports.userRegister = function (activeConnection, loginDetails) {
 }
 
 
-//HEY!: If no records are available, response will hang, should do a check. Or find existing fix, or submit an issue with mssql-connect
+//HEY!: If no records are available, response will hang, should do a check. Or find existing fix (timeout error should be getting thrown?), or submit an issue with mssql-connect
 module.exports.productLoad = function (activeConnection) {
     return new sql.Request(activeConnection).query('SELECT * FROM Products');
 }//productLoad

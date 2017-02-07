@@ -16,3 +16,16 @@ Setup database connection
 Deploy on web-server (note, url: melucky.ca, hosted on living room server, launch batch file to setup & launch node server)
 Migrate from .jade to .pug, or change to pure HTML.
 Migrate from .styl to .sass
+
+TASKS:
+Implement error catching for all query functions
+Add ability to create tables
+	Specify: 
+		Name
+		Type (number, string, date)
+Add ability to view created tables
+	From selectable list
+Add ability to add new records to created tables
+	Will need to get column name, data type, will need to standardise validation (string length, number length, etc.)
+Add ability to delete records from created tables
+Add ability to edit records from created tables

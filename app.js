@@ -10,8 +10,10 @@ var config = {
 var express = require('express');
 var sql = require('mssql');
 activeConnection = new sql.Connection(config);
-var routes = require('./routes');
-var postRoutes = require('./ajax');
+var routes = require('./routes/general');
+var userApi = require('./routes/user');
+var objectApi = require('./routes/objects');
+//var postRoutes = require('./ajax');
 var path = require('path');
 var bodyParser = require('body-parser');
 var engines = require('consolidate');
@@ -22,10 +24,9 @@ var app = express();
 var server = require('http').createServer(app);
 io = require('socket.io').listen(server);
 
-//Rendering
-app.engine('pug', engines.pug);
-app.engine('ejs', engines.ejs);
-
+//Setup
+app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, 'views'));
 
 var sessionManage = session({
     store: new MSSQLStore(config), // options are optional
@@ -33,15 +34,9 @@ var sessionManage = session({
     cookie: { maxAge: 600000 }
 });
 
-io.use(function (socket, next) {
-    sessionManage(socket.request, socket.request.res, next);
-});
-
-//Setup
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-
-
+//Rendering
+app.engine('pug', engines.pug);
+app.engine('ejs', engines.ejs);
 
 /*
 Middleware
@@ -49,6 +44,7 @@ ISSUE: Careful of dependents that must load after. Issue with some
 (bodyParsers work inconsistently if not loaded last?
 Sessions works inconsistently if not loaded as one of first
 */
+io.use(function (socket, next) {sessionManage(socket.request, socket.request.res, next);}); //add session middleware to socketIO
 app.use(sessionManage);
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -67,21 +63,27 @@ if ('development' == app.get('env')) {
 }
 
 //Routes
+
+//Serve pages
 app.get('/', routes.login);
 app.get('/about', routes.about);
 app.get('/blog', routes.blog);
 app.get('/login', routes.login);
 app.get('/inventory', routes.inventory);
 app.get('/console', routes.console);
+
+//Serve user API
 app.get('/logout', routes.logout);
-//app.get('/loadProducts', routes.loadProducts);
-app.post('/example', routes.example);
-app.post('/confirm', routes.confirm); //form method is POST, action is /confirm
-app.post('/loginUser', postRoutes.loginUser);
-app.post('/registerUser', postRoutes.registerUser);
+app.post('/loginUser', userApi.loginUser);
+app.post('/registerUser', userApi.registerUser);
 
 
-//Socket Managamenet
+//Socket requests
+/*
+Can name events anything, must be the same string client/server side.
+socket.(....) refers to the socket connection per connected instance. All socket
+related must remain inside the on.connect function to be handled properly
+*/
 io.sockets.on("connection", function (socket) {
     if (socket.request.session.login != true) {
         socket.disconnect('unauthorized');
@@ -89,10 +91,15 @@ io.sockets.on("connection", function (socket) {
     console.log("Socket connection added.");
     console.log("socket connected");
     console.log("socket id is: " + socket.id);
-    postRoutes.loadProducts(socket);
+    objectApi.loadProducts(socket);
+
+    socket.on('newProduct', function (data) {
+        console.log("New product received");
+        objectApi.addProduct(socket, data);
+    });
 });
 
-
+//Create server
 server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });

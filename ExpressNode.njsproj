@@ -35,8 +35,9 @@
     <Compile Include="public\javascripts\jquery-3.1.1.js" />
     <Compile Include="public\javascripts\jquery-3.1.1.min.js" />
     <Compile Include="public\javascripts\npm.js" />
-    <Compile Include="routes\index.js" />
-    <Compile Include="ajax\index.js" />
+    <Compile Include="routes\general\index.js" />
+    <Compile Include="routes\objects\index.js" />
+    <Compile Include="routes\user\index.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="public\fonts\glyphicons-halflings-regular.woff2" />
@@ -49,7 +50,6 @@
     <Content Include="public\stylesheets\bootstrap.min.css.map" />
     <Content Include="views\about.pug" />
     <Content Include="views\blog.pug" />
-    <Content Include="views\confirm.pug" />
     <Content Include="views\help.pug" />
     <Content Include="views\login.ejs" />
     <Content Include="views\index.pug" />
@@ -104,6 +104,9 @@
     <Folder Include="public\stylesheets\" />
     <Folder Include="public\stylesheets\dark\" />
     <Folder Include="routes\" />
+    <Folder Include="routes\general\" />
+    <Folder Include="routes\objects\" />
+    <Folder Include="routes\user\" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\body-parser\" />

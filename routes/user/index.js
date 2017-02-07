@@ -1,10 +1,5 @@
-﻿/*
-Ajax/index.js
-Contains routes for POST requests (sending/receiving async data)
-*/
-
-//  Section: Required modules   //
-var db = require('../dbconnect');
+﻿//  Section: Required modules   //
+var db = require('../../dbconnect');
 var session = require('express-session');
 //var io = require('socket.io');
 
@@ -57,19 +52,4 @@ exports.registerUser = function (req, res) {
 
     res.send("Fall Through");
 
-};
-
-/*
-Purpose: Accept a request, query on database for products, return records
-Uses:    Products
-*/
-exports.loadProducts = function (socket) {
-    if (socket.request.session.login == true) {
-        console.log("Hey, a socket request called me!");
-        db.productLoad(activeConnection).then(function (recordsets) {
-            var records = JSON.parse(JSON.stringify(recordsets));
-            console.log("emit to socket: " + socket.id);
-            io.to(socket.id).emit("product", recordsets);
-        });
-    }
 };

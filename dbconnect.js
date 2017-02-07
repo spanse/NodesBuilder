@@ -1,15 +1,12 @@
 ﻿var sql = require('mssql');
 
-module.exports.userQuery = function (activeConnection, queryCommand) {
-    console.log(queryCommand);
-    new sql.Request(activeConnection).query(queryCommand).catch(function (err) {
-        console.log("There was an error running the query.");
-        console.log(err);
-    });
-}
-
+/*
+Purpose: Authenticate a user against the database
+Input:  @activeConnection - a valid connection to the database
+        @loginDetails - a JSON object containing "username", "password"
+Output: @returned - A string of either "true", or "false", indicating if user is valid
+*/
 module.exports.userLogin = function (activeConnection, loginDetails) {
-
     var username = loginDetails.username;
     var password = loginDetails.password;
 
@@ -22,14 +19,15 @@ module.exports.userLogin = function (activeConnection, loginDetails) {
         console.log("returned is: " + returned);
         return returned;
     });
-    //.then(function (recordsets) {
-        //console.log("Returning value: " + returned);
-        //return returned;
-//});//execute.then  
-}//userLogin
+};//userLogin
 
+/*
+Purpose: Register a user with the database
+Input:  @activeConnection - a valid connection to the database
+        @loginDetails - a JSON object containing "username", "password", "email"
+Output:
+*/
 module.exports.userRegister = function (activeConnection, loginDetails) {
-
     var username = loginDetails.username;
     var password = loginDetails.password;
     var email = loginDetails.email;
@@ -48,10 +46,39 @@ module.exports.userRegister = function (activeConnection, loginDetails) {
         console.log(err);
     });
 
-}
+};
 
-
+/*
+Purpose: Load all products from the Products database.
+Input:  @activeConnection - a valid connection to the database
+Output: @[a promise] - A recordset containing all records from the Products table
+*/
 //HEY!: If no records are available, response will hang, should do a check. Or find existing fix (timeout error should be getting thrown?), or submit an issue with mssql-connect
 module.exports.productLoad = function (activeConnection) {
     return new sql.Request(activeConnection).query('SELECT * FROM Products');
-}//productLoad
+};//productLoad
+
+/*
+Purpose: Adds a product record to the Products database
+Input:  @activeConnection - a valid connection to the database
+        @newProduct - a JSON object containing the values for the record.
+*/
+module.exports.addProduct = function (activeConnection, newProduct) {
+    //Change empty strings to null values (so request.input can process them)
+    for (var key in newProduct) { //for every key in newProduct
+        if (!newProduct[key]) { //if its empty
+            newProduct[key] = null; //change to null
+        }
+    }
+    var request = new sql.Request(activeConnection);
+    request.input('Name', sql.VarChar, newProduct.productName);
+    request.input('Quantity', sql.Decimal, newProduct.productQuantity);
+    request.input('Receive', sql.Date, newProduct.productReceive);
+    request.input('Expire', sql.Date, newProduct.productExpire);
+    request.input('Temperature', sql.Decimal, newProduct.productTemperature);
+    request.input('Storage', sql.Int, newProduct.productStorage);
+    request.input('Comment', sql.VarChar, newProduct.productComment);
+    return request.query('INSERT INTO Products VALUES (@Name, @Quantity, @Temperature, @Receive, @Expire, @Storage, @Comment)');//.catch(function (err) {
+        //console.log("Catching error from query");
+    //});
+};

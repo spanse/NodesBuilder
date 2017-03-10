@@ -10,6 +10,7 @@ var config = {
 var express = require('express');
 var sql = require('mssql');
 activeConnection = new sql.Connection(config);
+activeConnection.connect(); //need to connect before require other modules
 var routes = require('./routes/general');
 var userApi = require('./routes/user');
 var objectApi = require('./routes/objects');
@@ -88,7 +89,6 @@ io.sockets.on("connection", function (socket) {
     if (socket.request.session.login != true) {
         socket.disconnect('unauthorized');
     }
-    console.log("Socket connection added.");
     console.log("socket connected");
     console.log("socket id is: " + socket.id);
     objectApi.loadProducts(socket);
@@ -98,6 +98,8 @@ io.sockets.on("connection", function (socket) {
         objectApi.addProduct(socket, data);
     });
 });
+
+
 
 //Create server
 server.listen(app.get('port'), function () {

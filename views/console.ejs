@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -7,11 +7,12 @@
     <title></title>
 
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css" />
     <!--<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">-->
     <script src="/javascripts/jquery-3.1.1.min.js"></script>
     <script src="/javascripts/bootstrap.js"></script>
     <script src="/javascripts/respond.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
     <script type='text/javascript'>
         var socket = io();
 
@@ -90,125 +91,138 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">Tekker</a>
 
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
 
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-                <a class="navbar-brand" href="#">Tekker</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/login">Login<span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form id="signin" class="navbar-form navbar-right" role="form">
-                    <button id="logout" type="button" class="btn btn-primary navbar-right" name="Logout" onclick='logoutUser()'>Logout</button>
-                </form>
-            </div>
+            <form id="signout" class="form-inline" role="form">
+                <button type="button" class="btn btn-danger" onclick="logoutUser()">Logout</button>
+            </form>
         </div>
     </nav>
 
-    <div class="container body-content">
+    <div class="container-fluid">
 
-        <div class="container">
-            <h2>Database View</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Received</th>
-                        <th>Expires</th>
-                        <th>Temperature</th>
-                        <th>Storage</th>
-                        <th>Comments</th>
-                    </tr>
-                </thead>
-                <tbody id='productTable'>
-                </tbody>
-            </table>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">New Product</button>
+        <div class="row pt-5">
 
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
+            <div class="container col-sm-2 text-center">
 
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Modal Header</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="addProduct" class="form" role="form">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input id="productName" type="text" class="form-control" name="productName" value="" placeholder="Product Name">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input id="productQuantity" type="text" class="form-control" name="productQuantity" value="" placeholder="Quantity">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input id="productReceive" type="date" class="form-control" name="productReceive" value="" placeholder="Receive Date">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input id="productExpire" type="date" class="form-control" name="productExpire" value="" placeholder="Expire Date">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input id="productTemperature" type="text" class="form-control" name="productTemperature" value="" placeholder="Storage Temperature">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input id="productStorage" type="text" class="form-control" name="productStorage" value="" placeholder="Storage Id">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input id="productComment" type="text" class="form-control" name="productComment" value="" placeholder="Comments">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="newProduct()">Submit</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-
+                <div class="btn-group-vertical">
+                    <h2>Actions</h2>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">New Product</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">New Product</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
                 </div>
             </div>
 
+            <div class="container col-sm-10">
+                <h2>Database View</h2>
+                <table class="table table-bordered table-inverse">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Received</th>
+                            <th>Expires</th>
+                            <th>Temperature</th>
+                            <th>Storage</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody id='productTable'></tbody>
+                </table>
+            </div>
         </div>
 
+        <!--Footer-->
+        <div class="row">
+            <div class="container">
+                <hr>
+                <footer>
+                    <p>Learning Experience - Spencer</p>
+                </footer>
 
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">New Product</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                            </div>
+                            <div class="modal-body">
+                                <form id="addProduct" class="form" role="form">
+                                    <div class="form-group row">
+                                        <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                                        <input id="productName" type="text" class="form-control-text" name="productName" value="" placeholder="Product Name">
+                                    </div>
+                                    <div class="form-group row">
+                                        <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                                        <input id="productQuantity" type="text" class="form-control-text" name="productQuantity" value="" placeholder="Quantity">
+                                    </div>
+                                    <div class="form-group row">
+                                        <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                                        <input id="productReceive" type="date" class="form-control-date" name="productReceive" value="" placeholder="Receive Date">
+                                    </div>
+                                    <div class="form-group row">
+                                        <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                                        <input id="productExpire" type="date" class="form-control-date" name="productExpire" value="" placeholder="Expire Date">
+                                    </div>
+                                    <div class="form-group row">
+                                        <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                                        <input id="productTemperature" type="text" class="form-control-text" name="productTemperature" value="" placeholder="Storage Temperature">
+                                    </div>
+                                    <div class="form-group row">
+                                        <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                                        <input id="productStorage" type="text" class="form-control-text" name="productStorage" value="" placeholder="Storage Id">
+                                    </div>
+                                    <div class="form-group row">
+                                        <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                                        <input id="productComment" type="text" class="form-control-text" name="productComment" value="" placeholder="Comments">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="newProduct()">Submit</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
 
-        <hr>
-        <footer>
-            <p>Learning Experience - Spencer</p>
-        </footer>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-
 </body>
 
 </html>

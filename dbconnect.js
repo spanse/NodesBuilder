@@ -1,4 +1,6 @@
-﻿var sql = require('mssql');
+﻿////Provides database connectivity functions////
+
+var sql = require('mssql');
 
 /*
 Purpose: Authenticate a user against the database
@@ -19,7 +21,7 @@ module.exports.userLogin = function (activeConnection, loginDetails) {
         console.log("returned is: " + returned);
         return returned;
     });
-};//userLogin
+};
 
 /*
 Purpose: Register a user with the database
@@ -53,7 +55,8 @@ Purpose: Load all products from the Products database.
 Input:  @activeConnection - a valid connection to the database
 Output: @[a promise] - A recordset containing all records from the Products table
 */
-//HEY!: If no records are available, response will hang, should do a check. Or find existing fix (timeout error should be getting thrown?), or submit an issue with mssql-connect
+//HEY!: If no records are available, response will hang, should do a check. Or find existing fix 
+//(timeout error should be getting thrown?), or submit an issue with mssql- connect
 module.exports.productLoad = function (activeConnection) {
     return new sql.Request(activeConnection).query('SELECT * FROM Products');
 };//productLoad

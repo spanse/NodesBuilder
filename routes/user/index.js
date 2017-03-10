@@ -1,18 +1,12 @@
 ﻿//  Section: Required modules   //
 var db = require('../../dbconnect');
 var session = require('express-session');
-//var io = require('socket.io');
-
-//  Section: Setup/Variables  //
-//Designate a connection to use when querying database//
-activeConnection.connect(); //Creates a connection from the connection pool (var in app.js)
 
 /*
 Purpose: Accept sent data, compare it to values in database,
          if a valid account, set account/session specific variables.
 Uses:    username, password, email
 */
-
 exports.loginUser = function (req, res) {
     var userDetails = JSON.parse(JSON.stringify(req.body));
     console.log("Username: " + userDetails.username);

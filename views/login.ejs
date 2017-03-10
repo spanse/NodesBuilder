@@ -3,9 +3,11 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title></title>
 
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css" />
     <!--<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">-->
     <script src="/javascripts/jquery-3.1.1.min.js"></script>
     <script src="/javascripts/bootstrap.js"></script>
@@ -13,15 +15,36 @@
     <script type='text/javascript'>
         $(document).ready(function() {
 
-
         });
 
-        ////Creates user in server database////
-        function createUser() {
+        ////Register User////
+        function registerUser() {
+            var data = {};
+            data.username = $('#newUsername').val();
+            data.password = $('#newPassword').val();
+            data.email = $('#newEmail').val();
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: '/registerUser',
+                success: function(data) {
+                    console.log(data);
+                    console.log("Success");
+                    $('#register').toggle();
+                    alert("User created");
+                }
+
+            });
+        }
+
+        ////Login User////
+        function loginUser() {
 
             var username = $('#username').val();
             var password = $('#password').val();
-            var email = $('#useremail').val();
+            var email = $('#email').val();
             var data = {};
             data.username = username;
             data.email = email;
@@ -31,69 +54,95 @@
                 type: 'POST',
                 data: JSON.stringify(data),
                 contentType: 'application/json', //THIS IS NOT OPTIONAL
-                url: '/createUser',
+                url: '/loginUser',
                 success: function(data) {
-                    console.log("User creation successful.");
+                    console.log("User login successful.");
+                    console.log(data);
+                    window.location.href = '/console';
+                    $('#signin').toggle();
                 },
                 error: function(data) {
-                    console.log("Error in user creation.");
+                    console.log("Error in login.");
                     console.log(data);
                     $('#myModal').modal("show");
 
                 }
             });
-        } //createUser
-
-        function createSession() {
-
-        } //createSession
+        } //loginUser
     </script>
 </head>
 
 <body>
 
-    <div class="navbar navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
-                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                <a href="/" class="navbar-brand">Main</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/blog">Blog</a></li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <a class="navbar-brand" href="#">Tekker</a>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+
+            <form id="signin" class="form-inline" role="form">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                    <input id="username" type="text" class="form-control" name="username" value="" placeholder="Username">
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input id="password" type="password" class="form-control" name="password" value="" placeholder="Password">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="loginUser()">Login</button>
+
+            </form>
         </div>
+    </nav>
+
+    <div class="container py-3 col-lg-3">
+        <h1>Register</h1>
+        <form id="register" class="form col-m-3" role="form">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <input id="newEmail" type="email" class="form-control" name="newEmail" value="" placeholder="Email Address">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
+                <input id="newUsername" type="text" class="form-control" name="newUsername" value="" placeholder="Username">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <input id="newPassword" type="password" class="form-control" name="newPassword" value="" placeholder="Password">
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="registerUser()">Login</button>
+        </form>
     </div>
 
-    <div class="container body-content">
-
-        <!--<div id="select_div"><a href="#" id="select_link">Test</a></div> used for testing AJAX -->
-        <div class="container row">
-            <div id="session-login" class="container col-sm-6">
-                <h2>Remember my session!</h2>
-                <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="John Doe" />
-                <input type="email" id="email" placeholder="example@email.ca" />
-            </div>
-
-            <div id="user-login" class="container col-sm-6">
-                <h2>Always remember me!</h2>
-                <label for='username'>Username:</label>
-                <input type='text' id='username' placeholder='John Doe' />
-                <input type='text' id='password' placeholder='Secret Formula' />
-                <input type='email' id='useremail' placeholder='example@email.ca' />
-                <input type='button' id='create-user' value='Register' onclick="createUser()" />
-            </div>
-        </div>
-        <hr>
-        <footer>
-            <p>Learning Experience - Spencer</p>
-        </footer>
-    </div>
-
+    <hr>
+    <footer>
+        <p>Learning Experience - Spencer</p>
+    </footer>
     <!-- Create failure modal. -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

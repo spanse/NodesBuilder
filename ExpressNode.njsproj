@@ -78,6 +78,7 @@
     <Content Include="public\fonts\font-awesome\scss\_stacked.scss" />
     <Content Include="public\fonts\font-awesome\scss\_variables.scss" />
     <Content Include="public\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="public\images\nodelogo.svg" />
     <Content Include="public\javascripts\jquery-3.1.1.min.map" />
     <Content Include="public\stylesheets\bootstrap-grid.css" />
     <Content Include="public\stylesheets\bootstrap-grid.css.map" />
@@ -97,9 +98,9 @@
     <Content Include="views\blog.pug" />
     <Content Include="views\console.ejs" />
     <Content Include="views\help.pug" />
+    <Content Include="views\home.ejs" />
     <Content Include="views\login.ejs" />
     <Content Include="views\index.pug" />
-    <Content Include="views\inventory.ejs" />
     <Content Include="views\layout.pug" />
     <Content Include="views\layoutdark.pug" />
     <None Include="compilerconfig.json" />

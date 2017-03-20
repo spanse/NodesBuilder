@@ -66,11 +66,11 @@ if ('development' == app.get('env')) {
 //Routes
 
 //Serve pages
-app.get('/', routes.login);
+app.get('/', routes.home);
+app.get('/home', routes.home);
 app.get('/about', routes.about);
 app.get('/blog', routes.blog);
 app.get('/login', routes.login);
-app.get('/inventory', routes.inventory);
 app.get('/console', routes.console);
 
 //Serve user API

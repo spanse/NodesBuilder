@@ -3,6 +3,10 @@
 
 var db = require('../../dbconnect');
 
+exports.home = function (req, res) {
+    res.render('home.ejs');
+};
+
 exports.index = function (req, res) {
     res.render('index.pug', {jadeversion: 'jade@1.11.0' });
 };
@@ -19,13 +23,6 @@ exports.blog = function (req, res) {
     justo.Nullam dictum felis eu pede mollis pretium.Integer tincidunt.Cras dapibus.Vivamus elementum semper nisi.Aenean vulputate eleifend tellus";
     var sideImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/220px-Smiley.svg.png';
     res.render('blog.pug', { titleHead: titleHead, titleBody: titleBody, sideImage: sideImage });
-};
-
-exports.inventory = function (req, res) {
-    req.session.sessionName = "Bob Builder";
-    var sessionName = req.session.sessionName;
-    var example = "Working";
-    res.render('inventory.ejs', { name: sessionName, example: example });
 };
 
 exports.login = function (req, res) {

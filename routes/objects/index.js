@@ -29,12 +29,32 @@ exports.loadProducts = function (socket) {
     console.log("Session ID: " + socket.request.session.sid);
 };
 
-    exports.addProduct = function (socket, data) {
-        if (socket.request.session.login == true) {
-            console.log("Adding product.");
-            db.addProduct(activeConnection, data).catch(function (err) {
-                console.log(err);
-                io.to(socket.id).emit("addProductError", "Error in add product");
-            });
-        }
+exports.addProduct = function (socket, data) {
+    if (socket.request.session.login == true) {
+        console.log("Adding product.");
+        //db.addProduct(activeConnection, data).catch(function (err) {
+        //    console.log(err);
+        //    io.to(socket.id).emit("addProductError", "Error in add product");
+        //});
+
+        db.addProduct(activeConnection, data).then(function () {
+            io.to(socket.id).emit("addProductSuccess", "Product added successfully");
+        }, function (err) {
+            io.to(socket.id).emit("addProductError", "Error adding product");
+            console.log(err);
+        });
+    }
+};
+
+exports.deleteProduct = function (socket, data) {
+    if (socket.request.session.login == true) {
+        console.log("Deleting products.");
+
+        db.deleteProduct(activeConnection, data);//.then(function () {
+            //io.to(socket.id).emit("deleteProductSuccess", "Product deleted successfully");
+        //}, function (err) {
+            //io.to(socket.id).emit("deleteProductError", "Error deleting product");
+        //});
+    }
+
 };

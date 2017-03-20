@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title></title>
+    <title>Interactive Console</title>
 
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css" />
@@ -17,6 +17,7 @@
         var socket = io();
 
         $(document).ready(function() {
+
             socket.on('product', function(data) {
                 var records = JSON.parse(JSON.stringify(data));
                 console.log(records.length);
@@ -45,6 +46,22 @@
             });
 
 
+            $('#productTable').on('click', 'tr', function() {
+
+                console.log($(this).text());
+
+                if ($(this).hasClass('bg-success')) {
+                    $(this).removeClass('bg-success selected-product');
+                } else {
+                    $(this).addClass('bg-success selected-product');
+                }
+
+            });
+
+            $('#deleteProductButton').on('click', function() {
+                $('#deleteCount').text($('.selected-product').length);
+            });
+
         });
         ////Logout User////
         function logoutUser() {
@@ -62,6 +79,7 @@
             });
         }
 
+        ////New Product////
         function newProduct() {
             var data = {};
             data.productName = $('#productName').val();
@@ -71,20 +89,29 @@
             data.productTemperature = $('#productTemperature').val();
             data.productStorage = $('#productStorage').val();
             data.productComment = $('#productComment').val();
-            // $.ajax({
-            //     type: 'POST',
-            //     data: JSON.stringify(data),
-            //     contentType: 'application/json', //THIS IS NOT OPTIONAL
-            //     url: '/addProduct',
-            //     success: function(data) {
-            //         alert("Product added");
-            //     }
-            // });
 
             socket.emit('newProduct', data);
             console.log("Submitted new product");
             socket.on('addProductError', function(data) {
                 alert("There was a problem adding the product");
+            });
+        }
+
+        function deleteProduct() {
+            var data = {};
+            console.log("Loopin");
+            $('.selected-product').each(function(index, elem) {
+                //console.log(index);
+                //console.log(elem.childNodes[0].innerHTML);
+                console.log(index);
+                data[index] = elem.childNodes[0].innerHTML;
+            });
+            console.log(data);
+
+            socket.emit('deleteProduct', data);
+            console.log("Sent delete request");
+            socket.on('deleteProductError', function(data) {
+                alert("There was a problem deleting the product(s)");
             });
         }
     </script>
@@ -132,9 +159,9 @@
 
                 <div class="btn-group-vertical">
                     <h2>Actions</h2>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">New Product</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">New Product</button>
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newProductModal" id='newProductButton'>New Product</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteProductModal" id='deleteProductButton'>Delete Product</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">Edit Product</button>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">New Product</button>
@@ -171,13 +198,13 @@
                     <p>Learning Experience - Spencer</p>
                 </footer>
 
-                <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal fade" id="newProductModal" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">New Product</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <form id="addProduct" class="form" role="form">
@@ -191,11 +218,11 @@
                                     </div>
                                     <div class="form-group row">
                                         <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
-                                        <input id="productReceive" type="date" class="form-control-date" name="productReceive" value="" placeholder="Receive Date">
+                                        <input id="productReceive" type="date" class="form-control-date" name="productReceive" value="">
                                     </div>
                                     <div class="form-group row">
                                         <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
-                                        <input id="productExpire" type="date" class="form-control-date" name="productExpire" value="" placeholder="Expire Date">
+                                        <input id="productExpire" type="date" class="form-control-date" name="productExpire" value="">
                                     </div>
                                     <div class="form-group row">
                                         <span class="input-group-addon"><i class="fa fa-user-circle"></i></span>
@@ -217,6 +244,27 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="modal fade" id="deleteProductModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Delete Product</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <h1>WARNING</h1>
+                                <p>You are about to delete <span id='deleteCount'>(calculating)</span> Product(s). Are you sure?</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteProduct()">Confirm</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

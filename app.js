@@ -94,9 +94,22 @@ io.sockets.on("connection", function (socket) {
     objectApi.loadProducts(socket);
 
     socket.on('newProduct', function (data) {
+        if (socket.request.session.login != true) {
+            socket.disconnect('unauthorized');
+        }
         console.log("New product received");
         objectApi.addProduct(socket, data);
     });
+
+    socket.on('deleteProduct', function (data) {
+        if (socket.request.session.login != true) {
+            socket.disconnect('unauthorized');
+        }
+        console.log("New delete product request recieved");
+        objectApi.deleteProduct(socket, data);
+    });
+}).on(Error, function (err) { //!!!!NOTE!!!! Temp solution. Need to properly handle errors.
+    console.log(err)
 });
 
 

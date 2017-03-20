@@ -81,7 +81,17 @@ module.exports.addProduct = function (activeConnection, newProduct) {
     request.input('Temperature', sql.Decimal, newProduct.productTemperature);
     request.input('Storage', sql.Int, newProduct.productStorage);
     request.input('Comment', sql.VarChar, newProduct.productComment);
-    return request.query('INSERT INTO Products VALUES (@Name, @Quantity, @Temperature, @Receive, @Expire, @Storage, @Comment)');//.catch(function (err) {
-        //console.log("Catching error from query");
+    return request.query('INSERT INTO Products VALUES (@Name, @Quantity, @Temperature, @Receive, @Expire, @Storage, @Comment)');
     //});
 };
+
+module.exports.deleteProduct = function (activeConnection, productKeys) {
+    console.log(productKeys);
+    for (var key in productKeys) {
+        console.log(productKeys[key]);
+        var request = new sql.Request(activeConnection);
+        request.input('ProductId', sql.Int, productKeys[key]);
+        request.query('DELETE FROM Products WHERE ProductId = @ProductId');
+    }
+
+};//deleteProduct

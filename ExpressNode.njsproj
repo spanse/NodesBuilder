@@ -78,6 +78,9 @@
     <Content Include="public\fonts\font-awesome\scss\_stacked.scss" />
     <Content Include="public\fonts\font-awesome\scss\_variables.scss" />
     <Content Include="public\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="public\images\bootstraplogo.svg" />
+    <Content Include="public\images\jquerylogo.png" />
+    <Content Include="public\images\microsoftsqllogo.png" />
     <Content Include="public\images\nodelogo.svg" />
     <Content Include="public\javascripts\jquery-3.1.1.min.map" />
     <Content Include="public\stylesheets\bootstrap-grid.css" />
@@ -94,6 +97,7 @@
     <Content Include="public\stylesheets\bootstrap-theme.min.css.map" />
     <Content Include="public\stylesheets\bootstrap.css.map" />
     <Content Include="public\stylesheets\bootstrap.min.css.map" />
+    <Content Include="public\stylesheets\carousel.css" />
     <Content Include="views\about.pug" />
     <Content Include="views\blog.pug" />
     <Content Include="views\console.ejs" />
@@ -108,7 +112,6 @@
       <SubType>Content</SubType>
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
-    <Content Include="public\images\borg.jpg" />
     <Content Include="public\javascripts\bootstrap.js" />
     <Content Include="public\javascripts\bootstrap.min.js" />
     <Content Include="public\javascripts\jquery.validate-vsdoc.js" />
